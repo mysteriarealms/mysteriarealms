@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 8% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 8% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 280 100% 70%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 5% 12%;
+    --muted-foreground: 240 5% 64%;
+
+    --accent: 280 80% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5% 18%;
+    --input: 240 5% 18%;
+    --ring: 280 100% 70%;
+
+    --radius: 0.5rem;
+
+    --mysterious-glow: 280 100% 70%;
+    --mysterious-purple: 280 80% 60%;
+    --mysterious-dark: 240 10% 8%;
+    --mysterious-darker: 240 12% 5%;
+    
+    --gradient-mysterious: linear-gradient(135deg, hsl(280 80% 20% / 0.3), hsl(240 10% 3.9%));
+    --shadow-glow: 0 0 40px hsl(var(--mysterious-glow) / 0.3);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 240 8% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 280 100% 70%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 5% 18%;
+    --sidebar-ring: 280 100% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Rich Text Editor Styles */
+.ql-toolbar {
+  @apply bg-muted border-border rounded-t-lg;
+}
+
+.ql-container {
+  @apply bg-background border-border rounded-b-lg;
+  min-height: 300px;
+}
+
+.ql-editor {
+  @apply text-foreground;
+  min-height: 300px;
+}
+
+.ql-editor.ql-blank::before {
+  @apply text-muted-foreground;
+}
+
+.ql-snow .ql-stroke {
+  @apply stroke-foreground;
+}
+
+.ql-snow .ql-fill {
+  @apply fill-foreground;
+}
+
+.ql-snow .ql-picker-label {
+  @apply text-foreground;
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
+  @apply border-border;
+}
+
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  @apply bg-popover border-border z-50;
+}
+
+.ql-snow .ql-tooltip {
+  @apply bg-popover border-border text-foreground;
+}
+
+/* Prose styles for article content */
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mb-4 mt-8;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mb-3 mt-6;
+}
+
+.prose h3 {
+  @apply text-xl font-bold mb-2 mt-4;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-4 ml-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose a {
+  @apply text-primary hover:underline underline;
+}
+
+.prose img {
+  @apply rounded-lg my-6;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-6;
+}
+
+.prose strong {
+  @apply font-bold;
+}
+
+.prose em {
+  @apply italic;
+}
