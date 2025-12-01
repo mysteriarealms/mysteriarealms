@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import Comments from "@/components/Comments";
 import { 
   Calendar, 
   Clock, 
@@ -374,6 +375,10 @@ const ArticleDetail = ({ language }: ArticleDetailProps) => {
               </div>
             </>
           )}
+
+          <Separator className="my-12" />
+          
+          <Comments articleId={article.id} language={language} />
         </div>
       </article>
     </>

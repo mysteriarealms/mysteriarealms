@@ -20,6 +20,8 @@ const Navigation = ({ language, setLanguage }: NavigationProps) => {
       personal: "Personal Experiences",
       curiosities: "Curiosities",
       mostRead: "Most Read",
+      mystery: "Mystery Challenge",
+      leaderboard: "Leaderboard",
       about: "About",
       contact: "Contact",
       privacy: "Privacy Policy",
@@ -32,6 +34,8 @@ const Navigation = ({ language, setLanguage }: NavigationProps) => {
       personal: "Përvoja Personale",
       curiosities: "Kuriozitete",
       mostRead: "Më të Lexuarat",
+      mystery: "Sfida Misterioze",
+      leaderboard: "Renditja",
       about: "Rreth Nesh",
       contact: "Kontakti",
       privacy: "Politika e Privatësisë",
@@ -69,6 +73,12 @@ const Navigation = ({ language, setLanguage }: NavigationProps) => {
               </Link>
               <Link to="/most-read" className="text-sm hover:text-primary transition-colors">
                 {t.mostRead}
+              </Link>
+              <Link to="/mystery-challenge" className="text-sm hover:text-primary transition-colors">
+                {t.mystery}
+              </Link>
+              <Link to="/leaderboard" className="text-sm hover:text-primary transition-colors">
+                {t.leaderboard}
               </Link>
               
               <Button
@@ -154,6 +164,20 @@ const Navigation = ({ language, setLanguage }: NavigationProps) => {
               >
                 {t.mostRead}
               </Link>
+              <Link
+                to="/mystery-challenge"
+                className="block text-sm hover:text-primary transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t.mystery}
+              </Link>
+              <Link
+                to="/leaderboard"
+                className="block text-sm hover:text-primary transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t.leaderboard}
+              </Link>
               
               <Button
                 variant="ghost"
@@ -173,3 +197,4 @@ const Navigation = ({ language, setLanguage }: NavigationProps) => {
 };
 
 export default Navigation;
+

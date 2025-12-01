@@ -12,6 +12,8 @@ import AdminLayout from "./components/AdminLayout";
 import Home from "./pages/Home";
 import CategoryPage from "./pages/CategoryPage";
 import MostRead from "./pages/MostRead";
+import MysteryChallenge from "./pages/MysteryChallenge";
+import Leaderboard from "./pages/Leaderboard";
 import SearchResults from "./pages/SearchResults";
 import ArticleDetail from "./pages/ArticleDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -25,6 +27,8 @@ import AdminArticles from "./pages/AdminArticles";
 import AdminArticleEditor from "./pages/AdminArticleEditor";
 import AdminCategories from "./pages/AdminCategories";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminComments from "./pages/AdminComments";
+import AdminMysteries from "./pages/AdminMysteries";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -57,6 +61,8 @@ const AppContent = () => {
           <Route path="/personal-experiences" element={<CategoryPage language={language} />} />
           <Route path="/curiosities" element={<CategoryPage language={language} />} />
           <Route path="/most-read" element={<MostRead language={language} />} />
+          <Route path="/mystery-challenge" element={<MysteryChallenge language={language} />} />
+          <Route path="/leaderboard" element={<Leaderboard language={language} />} />
           <Route path="/search" element={<SearchResults language={language} />} />
           <Route path="/article/:slug" element={<ArticleDetail language={language} />} />
           
@@ -127,6 +133,26 @@ const AppContent = () => {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminAnalytics />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/comments"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminComments />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/mysteries"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminMysteries />
                 </AdminLayout>
               </ProtectedRoute>
             }

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, FileText, LogOut, FolderOpen, BarChart3 } from "lucide-react";
+import { LayoutDashboard, FileText, LogOut, FolderOpen, BarChart3, MessageSquare, Trophy } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +70,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                   Analytics
                 </Button>
               </Link>
+              <Link to="/admin/comments">
+                <Button
+                  variant={isActive("/admin/comments") ? "default" : "ghost"}
+                  size="sm"
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  Comments
+                </Button>
+              </Link>
+              <Link to="/admin/mysteries">
+                <Button
+                  variant={isActive("/admin/mysteries") ? "default" : "ghost"}
+                  size="sm"
+                >
+                  <Trophy className="w-4 h-4 mr-2" />
+                  Mysteries
+                </Button>
+              </Link>
               <Button onClick={handleSignOut} variant="outline" size="sm">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
@@ -119,6 +137,22 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
               size="sm"
             >
               <BarChart3 className="w-4 h-4" />
+            </Button>
+          </Link>
+          <Link to="/admin/comments">
+            <Button
+              variant={isActive("/admin/comments") ? "default" : "ghost"}
+              size="sm"
+            >
+              <MessageSquare className="w-4 h-4" />
+            </Button>
+          </Link>
+          <Link to="/admin/mysteries">
+            <Button
+              variant={isActive("/admin/mysteries") ? "default" : "ghost"}
+              size="sm"
+            >
+              <Trophy className="w-4 h-4" />
             </Button>
           </Link>
         </div>

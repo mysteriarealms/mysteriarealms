@@ -1,0 +1,25 @@
+project_id = "aawlzywzmiaepwvrkptj"
+
+[functions.submit-comment]
+verify_jwt = false
+
+[functions.verify-comment]
+verify_jwt = false
+
+[functions.check-admin-ip]
+verify_jwt = false
+
+[functions.send-mystery-winner-email]
+verify_jwt = true
+
+[functions.submit-theory]
+verify_jwt = false
+
+[functions.submit-vote]
+verify_jwt = false
+
+[functions.database-backup]
+verify_jwt = true
+
+[functions.restore-backup]
+verify_jwt = true
