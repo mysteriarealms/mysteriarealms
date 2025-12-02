@@ -1,5 +1,7 @@
+// deno-lint-ignore-file no-sloppy-imports
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+// deno-lint-ignore no-sloppy-imports
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,7 +27,12 @@ interface CategoryPageProps {
 }
 
 const CategoryPage = ({ language }: CategoryPageProps) => {
-  const { category } = useParams();
+  const { category: categoryParam } = useParams();
+  const location = window.location.pathname;
+  
+  // Get category slug from params or from the route path itself
+  const category = categoryParam || location.replace(/^\//, '').split('/')[0];
+  
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
