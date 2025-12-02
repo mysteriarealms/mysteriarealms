@@ -1,7 +1,5 @@
-// deno-lint-ignore-file no-sloppy-imports
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-// deno-lint-ignore no-sloppy-imports
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
