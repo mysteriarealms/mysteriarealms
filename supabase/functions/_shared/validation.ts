@@ -15,8 +15,8 @@ export const nameSchema = z.string()
   .trim()
   .min(1, { message: "Name cannot be empty" })
   .max(100, { message: "Name must be less than 100 characters" })
-  .regex(/^[a-zA-Z\s\u00C0-\u024F\u1E00-\u1EFF-]+$/, { 
-    message: "Name can only contain letters, spaces, and hyphens" 
+  .regex(/^[a-zA-Z0-9\s\u00C0-\u024F\u1E00-\u1EFF'.,-]+$/, { 
+    message: "Name can only contain letters, numbers, spaces, apostrophes, periods, commas, and hyphens" 
   });
 
 export const contentSchema = z.string()
@@ -134,19 +134,19 @@ export function errorResponse(message: string, status: number, corsHeaders: Reco
   );
 }
 
-// Email validation using Abstract API
+// Email validation using EmailListVerify API
 export async function validateEmailExists(email: string): Promise<{
   valid: boolean;
   error?: string;
 }> {
   try {
-    const abstractApiKey = Deno.env.get("ABSTRACT_API_KEY");
-    if (!abstractApiKey) {
+    const apiKey = Deno.env.get("EMAILLISTVERIFY_API_KEY");
+    if (!apiKey) {
       return { valid: false, error: "Email validation service not configured" };
     }
 
     const response = await fetch(
-      `https://emailvalidation.abstractapi.com/v1/?api_key=${abstractApiKey}&email=${encodeURIComponent(email)}`
+      `https://apps.emaillistverify.com/api/verifyEmail?secret=${apiKey}&email=${encodeURIComponent(email)}`
     );
 
     if (!response.ok) {
@@ -154,12 +154,39 @@ export async function validateEmailExists(email: string): Promise<{
       return { valid: false, error: "Email verification service unavailable" };
     }
 
-    const data = await response.json();
+    const result = await response.text();
+    console.log("EmailListVerify result:", result);
     
-    if (!data.is_valid_format?.value || !data.is_smtp_valid?.value || data.is_disposable_email?.value) {
+    // Valid statuses from EmailListVerify: ok, ok_for_all, unknown
+    // Invalid statuses: email_disabled, invalid_syntax, disposable, spam_traps, etc.
+    const validStatuses = ["ok", "ok_for_all"];
+    const unknownButAcceptable = ["unknown"]; // Accept unknown as we'll verify via email link
+    
+    if (result === "disposable") {
       return { 
         valid: false, 
-        error: "This email address does not exist or is not valid. Please use a real email address." 
+        error: "Disposable email addresses are not allowed. Please use a real email address." 
+      };
+    }
+    
+    if (result === "invalid_syntax") {
+      return { 
+        valid: false, 
+        error: "Invalid email format. Please check your email address." 
+      };
+    }
+    
+    if (result === "email_disabled") {
+      return { 
+        valid: false, 
+        error: "This email address appears to be disabled or inactive." 
+      };
+    }
+    
+    if (!validStatuses.includes(result) && !unknownButAcceptable.includes(result)) {
+      return { 
+        valid: false, 
+        error: "This email address could not be verified. Please use a valid email address." 
       };
     }
 

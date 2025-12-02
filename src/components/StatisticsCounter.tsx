@@ -93,7 +93,7 @@ const StatisticsCounter = ({ language }: StatisticsCounterProps) => {
   const t = translations[language as keyof typeof translations];
 
   // Don't render if no data yet
-  if (!stats || stats.articles === 0) {
+  if (!stats) {
     return null;
   }
 

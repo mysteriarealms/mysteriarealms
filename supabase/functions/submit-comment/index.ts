@@ -1,7 +1,6 @@
 // deno-lint-ignore-file no-import-prefix
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { 
   emailSchema, 
   nameSchema, 
@@ -70,18 +69,13 @@ serve(async (req) => {
       return errorResponse(emailValidation.error || "Email validation failed", 400, corsHeaders);
     }
 
-    // Generate verification token
-    const verificationToken = crypto.randomUUID();
-    const verificationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
-
     // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // Insert comment with verification token
-    // deno-lint-ignore no-unused-vars
+    // Insert comment - auto-approved since email was validated by EmailListVerify
     const { data: comment, error: insertError } = await supabaseClient
       .from("comments")
       .insert({
@@ -90,10 +84,10 @@ serve(async (req) => {
         name: sanitizedName,
         content: sanitizedContent,
         parent_comment_id: parentCommentId || null,
-        verification_token: verificationToken,
-        verification_expires_at: verificationExpiresAt.toISOString(),
-        is_email_verified: false,
-        is_approved: false,
+        verification_token: null,
+        verification_expires_at: null,
+        is_email_verified: true,
+        is_approved: true,
       })
       .select()
       .single();
@@ -103,31 +97,11 @@ serve(async (req) => {
       return errorResponse("Failed to submit comment", 500, corsHeaders);
     }
 
-    // Send verification email using Resend
-    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-    const verificationLink = `${Deno.env.get("SUPABASE_URL")}/functions/v1/verify-comment?token=${verificationToken}`;
-
-    await resend.emails.send({
-      from: "Mysteria Realm <onboarding@resend.dev>",
-      to: [validatedEmail.data],
-      subject: "Verify your comment on Mysteria Realm",
-      html: `
-        <h2>Verify Your Comment</h2>
-        <p>Hello ${sanitizedName},</p>
-        <p>Thank you for sharing your experience on Mysteria Realm! To complete your comment submission, please verify your email address by clicking the link below:</p>
-        <p><a href="${verificationLink}" style="background-color: #8B5CF6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Verify Email</a></p>
-        <p>Or copy and paste this link into your browser:</p>
-        <p>${verificationLink}</p>
-        <p>This link will expire in 24 hours.</p>
-        <p>Once verified, your comment will be reviewed by our moderators before being published.</p>
-        <br>
-        <p>Best regards,<br>The Mysteria Realm Team</p>
-      `,
-    });
+    console.log("Comment auto-approved after email validation:", comment.id);
 
     return successResponse({ 
       success: true, 
-      message: "Comment submitted! Please check your email to verify and publish your comment."
+      message: "Your comment has been published successfully!"
     }, corsHeaders);
   } catch (error) {
     console.error("Error in submit-comment function:", error);
