@@ -12,7 +12,7 @@ const StatisticsCounter = ({ language }: StatisticsCounterProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const { data: stats } = useQuery({
+  const { data: stats, isLoading } = useQuery({
     queryKey: ["statistics"],
     queryFn: async () => {
       // Get total published articles
@@ -52,6 +52,8 @@ const StatisticsCounter = ({ language }: StatisticsCounterProps) => {
         readingTime: totalReadingTime,
       };
     },
+    staleTime: 0,
+    refetchOnMount: "always",
   });
 
   useEffect(() => {
@@ -92,36 +94,39 @@ const StatisticsCounter = ({ language }: StatisticsCounterProps) => {
 
   const t = translations[language as keyof typeof translations];
 
-  // Don't render if no data yet
-  if (!stats) {
-    return null;
-  }
+  // Use default values while loading
+  const displayStats = stats || {
+    articles: 0,
+    views: 0,
+    categories: 0,
+    readingTime: 0,
+  };
 
   const statistics = [
     {
       icon: BookOpen,
-      value: stats.articles,
+      value: displayStats.articles,
       label: t.articles,
       color: "from-primary to-purple-500",
       suffix: "",
     },
     {
       icon: Eye,
-      value: stats.views,
+      value: displayStats.views,
       label: t.views,
       color: "from-accent to-pink-500",
       suffix: "",
     },
     {
       icon: FolderOpen,
-      value: stats.categories,
+      value: displayStats.categories,
       label: t.categories,
       color: "from-blue-500 to-cyan-500",
       suffix: "",
     },
     {
       icon: Clock,
-      value: stats.readingTime,
+      value: displayStats.readingTime,
       label: t.readingTime,
       color: "from-emerald-500 to-teal-500",
       suffix: "",
