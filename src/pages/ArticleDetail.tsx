@@ -265,10 +265,10 @@ const ArticleDetail = ({ language }: ArticleDetailProps) => {
         </script>
       </Helmet>
 
-      <article className="min-h-screen pt-16">
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
-          <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-8 transition-colors">
-            <ArrowLeft className="w-4 h-4 mr-2" />
+      <article className="min-h-screen pt-16 overflow-x-hidden">
+        <div className="container mx-auto px-4 py-8 md:py-12 max-w-4xl overflow-hidden">
+          <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 md:mb-8 transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
             {language === "sq" ? "Kthehu pas" : "Back"}
           </Link>
 
@@ -276,64 +276,64 @@ const ArticleDetail = ({ language }: ArticleDetailProps) => {
             <img
               src={article.featured_image_url}
               alt={title}
-              className="w-full h-[400px] object-cover rounded-lg mb-8"
+              className="w-full h-[200px] sm:h-[300px] md:h-[400px] object-cover rounded-lg mb-6 md:mb-8"
             />
           )}
 
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             <Link to={`/category/${article.categories.slug}`}>
-              <Badge variant="outline" className="mb-4">
+              <Badge variant="outline" className="mb-3 md:mb-4">
                 {categoryName}
               </Badge>
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 break-words">{title}</h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8">
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              {language === "sq" ? "Publikuar nga Admin" : "Posted by Admin"}
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs sm:text-sm text-muted-foreground mb-6 md:mb-8">
+            <span className="flex items-center gap-1 md:gap-2">
+              <Calendar className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="whitespace-nowrap">{language === "sq" ? "Publikuar nga Admin" : "Posted by Admin"}</span>
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              {format(new Date(article.published_at), "MMMM d, yyyy")}
+            <span className="hidden sm:inline">•</span>
+            <span className="flex items-center gap-1 md:gap-2">
+              <Calendar className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="whitespace-nowrap">{format(new Date(article.published_at), "MMM d, yyyy")}</span>
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              {article.reading_time_minutes} {language === "sq" ? "min lexim" : "min read"}
+            <span className="hidden sm:inline">•</span>
+            <span className="flex items-center gap-1 md:gap-2">
+              <Clock className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="whitespace-nowrap">{article.reading_time_minutes} {language === "sq" ? "min" : "min"}</span>
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              {article.view_count} {language === "sq" ? "shikime" : "views"}
+            <span className="hidden sm:inline">•</span>
+            <span className="flex items-center gap-1 md:gap-2">
+              <Eye className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="whitespace-nowrap">{article.view_count} {language === "sq" ? "shikime" : "views"}</span>
             </span>
           </div>
 
-          <div className="flex gap-2 mb-8">
-            <Button onClick={shareOnFacebook} variant="outline" size="sm">
-              <Facebook className="w-4 h-4 mr-2" />
-              Facebook
+          <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
+            <Button onClick={shareOnFacebook} variant="outline" size="sm" className="text-xs sm:text-sm">
+              <Facebook className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="hidden xs:inline">Facebook</span>
             </Button>
-            <Button onClick={shareOnTwitter} variant="outline" size="sm">
-              <Twitter className="w-4 h-4 mr-2" />
-              Twitter
+            <Button onClick={shareOnTwitter} variant="outline" size="sm" className="text-xs sm:text-sm">
+              <Twitter className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="hidden xs:inline">Twitter</span>
             </Button>
-            <Button onClick={shareOnWhatsApp} variant="outline" size="sm">
-              <MessageCircle className="w-4 h-4 mr-2" />
-              WhatsApp
+            <Button onClick={shareOnWhatsApp} variant="outline" size="sm" className="text-xs sm:text-sm">
+              <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="hidden xs:inline">WhatsApp</span>
             </Button>
-            <Button onClick={copyLink} variant="outline" size="sm">
-              <Share2 className="w-4 h-4 mr-2" />
-              {language === "sq" ? "Kopjo" : "Copy"}
+            <Button onClick={copyLink} variant="outline" size="sm" className="text-xs sm:text-sm">
+              <Share2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 flex-shrink-0" />
+              <span className="hidden xs:inline">{language === "sq" ? "Kopjo" : "Copy"}</span>
             </Button>
           </div>
 
-          <Separator className="mb-8" />
+          <Separator className="mb-6 md:mb-8" />
 
           <div 
-            className="prose prose-invert max-w-none"
+            className="prose prose-invert max-w-none prose-sm sm:prose-base overflow-hidden break-words [&_img]:max-w-full [&_pre]:overflow-x-auto [&_table]:overflow-x-auto [&_table]:block"
             dangerouslySetInnerHTML={{ __html: content }}
           />
 
