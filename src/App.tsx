@@ -51,7 +51,7 @@ const AppContent = () => {
         </>
       )}
       
-      <div className="flex-grow">
+      <main className="flex-1">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home language={language} />} />
@@ -159,8 +159,8 @@ const AppContent = () => {
           />
           
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+      </Routes>
+      </main>
       
       {!isAdminRoute && <Footer language={language} />}
     </div>
